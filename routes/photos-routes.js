@@ -1,9 +1,20 @@
-const express = require('express')
-const router = express.Router()
-const { getAllPhotos, createFakePhotos } = require('../controllers/photos-controllers');
+const express = require('express');
+const router = express.Router();
+const photoController = require('../controllers/photos-controllers');
 
-router.get('/photos', getAllPhotos)
+// GET /photos
+router.get('/photos', photoController.getAllPhotos);
 
-router.get('/photos/create/:id', createFakePhotos)
+// GET /photos/:id
+router.get('/photos/:id', photoController.getPhotoById);
 
-module.exports = router
+// POST /photos
+router.post('/photos/create/:id', photoController.createPhoto);
+
+// PUT /photos/:id
+router.put('/photos/:id', photoController.updatePhoto);
+
+// DELETE /photos/:id
+router.delete('/photos/:id', photoController.deletePhoto);
+
+module.exports = router;
