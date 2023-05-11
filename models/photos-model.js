@@ -3,24 +3,50 @@ const mongoose = require('mongoose');
 const photoSchema = new mongoose.Schema({
     photoId: {
         type: Number,
-        required: true
+        required: true,
     },
     photoTitle: {
         type: String,
-        required: true
+        required: true,
+    },
+    photoDescription: {
+        type: String,
+        required: true,
     },
     photoUrl: {
         type: String,
-        required: true
+        required: true,
     },
     photoThumbnailUrl: {
         type: String,
-        required: true
+        required: true,
+    },
+    photoAlbumId: {
+        type: String,
+        required: true,
+    },
+    photoDate: {
+        type: Date,
+        required: true,
+    },
+    photoAuthor: {
+        type: String,
+        required: true,
+    },
+    photoLikes: {
+        type: Number,
+        required: true,
+    },
+    photoComments: {
+        type: Number,
+        required: true,
     },
     createdAt: {
         type: Date,
-        default: Date.now()
+        required: true,
     }
-})
+});
 
-module.exports = mongoose.model('photo', photoSchema)
+const Photo = mongoose.model('Photo', photoSchema);
+
+module.exports = Photo;
