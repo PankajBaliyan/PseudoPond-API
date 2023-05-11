@@ -32,7 +32,8 @@ const employeesRoute = require('./routes/employees-routes'),
     todosRoute = require('./routes/todos-routes'),
     usersRoute = require('./routes/users-routes'),
     productsRoutes = require('./routes/products-routes'),
-    ordersRoutes = require('./routes/orders-routes')
+    ordersRoutes = require('./routes/orders-routes'),
+    locationsRoutes = require('./routes/locations-routes');
 
 app.use(employeesRoute)
 app.use(eventsRoute)
@@ -44,6 +45,7 @@ app.use(todosRoute)
 app.use(usersRoute)
 app.use(productsRoutes)
 app.use(ordersRoutes)
+app.use(locationsRoutes)
 
 //! Server Setup
 app.listen(PORT, () => {
