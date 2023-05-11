@@ -3,15 +3,31 @@ const Todo = require("../models/todos-model"),
     notifier = require('node-notifier')
 
 //* to get all todo's from database
-const getAllToDos = async (req, res) => {
+exports.getAllTodos = async (req, res) => {
     try {
-        const todos = await Todo.find({})
-        res.json(todos)
-    } catch (error) {
-        console.log("error", error)
-        res.send("error ", error)
+        const todos = await Todo.find();
+        res.json(todos);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
     }
-}
+};
+
+exports.getTodoById = async (req, res) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+        if (!todo) {
+            return res.status(404).json({ msg: 'Todo not found' });
+        }
+        res.json(todo);
+    } catch (err) {
+        console.error(err.message);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ msg: 'Todo not found' });
+        }
+        res.status(500).send('Server Error');
+    }
+};
 
 //* function to get highest id & will store data after that
 async function getNextTodoId() {
@@ -26,24 +42,24 @@ async function getNextTodoId() {
 }
 
 //* route to create fake date at single click
-const createFakeTodo = async (req, res) => {
+exports.createTodo = async (req, res) => {
     const id = req.params.id
     try {
         const todos = [];
-        let todoID = await getNextTodoId();
+        let todoId = await getNextTodoId();
         for (let i = 0; i < id; i++) {
-            const title = casual.title,
-                status = casual.status;
 
             const todo = {
-                todoId: todoID,
-                title: title,
-                completedStatus: status,
-                createdAt: new Date(),
+                todoId,
+                todoTitle: casual.title,
+                todoDescription: casual.sentences(n = 2),
+                todoDueDate: casual.date('YYYY-MM-DD'),
+                todoStatus: casual.random_element(['Pending', 'Complete']),
+                createdAt: casual.date('YYYY-MM-DDTHH:mm:ssZ'),
             };
 
             todos.push(todo);
-            todoID = todoID + 1
+            todoId = todoId + 1
         }
         todos.sort((a, b) => a.todoId - b.todoId); // Sort the todos array by todoId
 
@@ -63,9 +79,52 @@ const createFakeTodo = async (req, res) => {
     } catch (error) {
         console.log("error", error)
     }
-}
+};
 
-module.exports = {
-    getAllToDos,
-    createFakeTodo
-}
+exports.updateTodo = async (req, res) => {
+    // const { todoTitle, todoDescription, todoDueDate, todoStatus } = req.body;
+
+    // const todoFields = {};
+    // if (todoTitle) todoFields.todoTitle = todoTitle;
+    // if (todoDescription) todoFields.todoDescription = todoDescription;
+    // if (todoDueDate) todoFields.todoDueDate = todoDueDate;
+    // if (todoStatus) todoFields.todoStatus = todoStatus;
+
+    // try {
+    //     let todo = await Todo.findById(req.params.id);
+    //     if (!todo) {
+    //         return res.status(404).json({ msg: 'Todo not found' });
+    //     }
+
+    //     todo = await Todo.findByIdAndUpdate(
+    //         req.params.id,
+    //         { $set: todoFields },
+    //         { new: true }
+    //     );
+
+    //     res.json(todo);
+    // } catch (err) {
+    //     console.error(err.message);
+    //     if (err.kind === 'ObjectId') {
+    //         return res.status(404).json({ msg: 'Todo not found' });
+    //     }
+    //     res.status(500).send('Server Error');
+    // }
+};
+
+exports.deleteTodo = async (req, res) => {
+    // try {
+    //     const todo = await Todo.findById(req.params.id);
+    //     if (!todo) {
+    //         return res.status(404).json({ msg: 'Todo not found' });
+    //     }
+    //     await todo.remove();
+    //     res.json({ msg: 'Todo removed' });
+    // } catch (err) {
+    //     console.error(err.message);
+    //     if (err.kind === 'ObjectId') {
+    //         return res.status(404).json({ msg: 'Todo not found' });
+    //     }
+    //     res.status(500).send('Server Error');
+    // }
+};

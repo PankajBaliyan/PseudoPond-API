@@ -1,9 +1,11 @@
-const express = require('express')
-const { getAllToDos, createFakeTodo } = require('../controllers/todos-controllers')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
+const todoController = require('../controllers/todos-controllers')
 
-router.get('/todos', getAllToDos)
+router.get('/todos', todoController.getAllTodos);
+router.get('/todos/:id', todoController.getTodoById);
+router.post('/todos/create/:id', todoController.createTodo);
+router.put('/todos/:id', todoController.updateTodo);
+router.delete('/todos/:id', todoController.deleteTodo);
 
-router.get('/todos/create/:id', createFakeTodo)
-
-module.exports = router
+module.exports = router;
