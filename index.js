@@ -26,10 +26,10 @@ app.get('/', (req, res) => {
 const employeesRoute = require('./routes/employees-routes'),
     eventsRoute = require('./routes/events-routes'),
     inventoryRoute = require('./routes/inventory-routes'),
-    photosRoute = require('./routes/photos-routes')
+    photosRoute = require('./routes/photos-routes'),
+    postsRoute = require('./routes/posts-routes')
 // usersRoute = require('./routes/users-routes'),
 // todosRoute = require('./routes/todos-routes'),
-// postsRoute = require('./routes/posts-routes'),
 // commentsRoute = require('./routes/comments-routes'),
 // productsRoutes = require('./routes/products-routes'),
 // ordersRoutes = require('./routes/orders-routes'),
@@ -38,9 +38,9 @@ app.use(employeesRoute)
 app.use(eventsRoute)
 app.use(inventoryRoute)
 app.use(photosRoute)
+app.use(postsRoute)
 // app.use(usersRoute)
 // app.use(todosRoute)
-// app.use(postsRoute)
 // app.use(commentsRoute)
 // app.use(productsRoutes)
 // app.use(ordersRoutes)
