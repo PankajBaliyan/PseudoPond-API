@@ -23,7 +23,8 @@ app.get('/', (req, res) => {
 })
 
 //! Routes Setup
-const employeesRoute = require('./routes/employees-routes')
+const employeesRoute = require('./routes/employees-routes'),
+    eventsRoute = require('./routes/events-routes')
 // usersRoute = require('./routes/users-routes'),
 // todosRoute = require('./routes/todos-routes'),
 // photosRoute = require('./routes/photos-routes'),
@@ -31,10 +32,10 @@ const employeesRoute = require('./routes/employees-routes')
 // commentsRoute = require('./routes/comments-routes'),
 // productsRoutes = require('./routes/products-routes'),
 // ordersRoutes = require('./routes/orders-routes'),
-// eventsRoute = require('./routes/events-routes'),
 // inventoryRoute = require('./routes/inventory-routes')
 
 app.use(employeesRoute)
+app.use(eventsRoute)
 // app.use(usersRoute)
 // app.use(todosRoute)
 // app.use(photosRoute)
@@ -42,7 +43,6 @@ app.use(employeesRoute)
 // app.use(commentsRoute)
 // app.use(productsRoutes)
 // app.use(ordersRoutes)
-// app.use(eventsRoute)
 // app.use(inventoryRoute)
 
 //! Server Setup
