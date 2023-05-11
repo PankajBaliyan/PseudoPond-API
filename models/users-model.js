@@ -5,15 +5,15 @@ const usersSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    fname: {
+    userFname: {
         type: String,
         required: true
     },
-    lname: {
+    userLname: {
         type: String,
         required: true
     },
-    fullName: {
+    userFullName: {
         type: String,
         required: true,
         default: function () {
@@ -26,36 +26,32 @@ const usersSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
-    profilePic: {
+    userProfilePic: {
         type: String,
         required: true,
     },
-    phone: {
+    userUserPhone: {
         type: String,
         required: true,
     },
-    email: {
+    userEmail: {
         type: String,
         required: true,
         unique: true
     },
-    password: {
+    userPassword: {
         type: String,
         required: true
     },
-    website: {
+    userWebsite: {
         type: String,
         required: true,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    companyName: {
+    userCompanyName: {
         type: String,
         required: true,
     },
-    address: {
+    userAddress: {
         area: {
             type: String,
             required: true
@@ -86,7 +82,19 @@ const usersSchema = new mongoose.Schema({
                 required: true
             }
         }
-    }
+    },
+    userAge: {
+        type: Number,
+        required: true
+    },
+    userGender: {
+        type: String,
+        required: true
+    },
+    userCreatedAt: {
+        type: Date,
+        default: Date.now
+    },
 })
 
 module.exports = mongoose.model('User', usersSchema)

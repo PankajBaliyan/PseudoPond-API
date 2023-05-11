@@ -6,13 +6,12 @@ const User = require('../models/users-model'),
 //* Route to get all users data
 const getAllUsers = async (req, res) => {
     try {
-        // const users = await User.find({});
+        // const users = await User.find({}); // for normal view
         // const users = await User.find().sort({ userID: 1 }); //for ascending order
         // const users = await User.find().sort({ userID: -1 }); //for descending order
         const users = await User.find().sort({ userID: 1 }).lean();
         users.forEach(user => {
-            const { userID, fname, lname, fullName, ...rest } = user;
-            //   console.log({ userID, fname, lname, fullName, ...rest });
+            const { userID, userFname, userLname, userFullName, ...rest } = user;
         });
 
         res.json(users);
@@ -35,55 +34,43 @@ async function getNextUserId() {
 }
 
 //* Route to insert temp data into DataBase
-const createFakeUsers = async (req, res) => {
+const createUser = async (req, res) => {
     let id = req.params.id;
     try {
         const users = [];
         let userID = await getNextUserId();
         for (let i = 0; i < id; i++) {
-            const response = await axios.get('https://picsum.photos/200'),
-                firstName = casual.first_name,
-                lastName = casual.last_name,
-                fullName = `${firstName} ${lastName}`,
-                userName = casual.username,
-                email = casual.email,
-                password = casual.password,
-                profilePic = response.request.res.responseUrl,
-                phone = casual.phone,
-                website = casual.url,
-                companyName = casual.company_name,
-                area = casual.country,
-                city = casual.city,
-                state = casual.state,
-                country = casual.country,
-                zipCode = casual.zip(5),
-                latitude = casual.latitude,
-                longitude = casual.longitude;
+            const response = await axios.get('https://picsum.photos/200')
+            const userFname = casual.first_name;
+            const userLname = casual.last_name;
+            const userFullName = `${userFname} ${userLname}`;
 
             const user = {
-                userID: userID,
-                userName: userName,
-                fname: firstName,
-                lname: lastName,
-                fullName: fullName,
-                profilePic: profilePic,
-                phone: phone,
-                website: website,
-                email: email,
-                companyName: companyName,
-                password: password,
-                address: {
-                    area: area,
-                    city: city,
-                    state: state,
-                    country: country,
-                    zipCode: zipCode,
+                userID,
+                userFname: userFname,
+                userLname: userLname,
+                userFullName: userFullName,
+                userName: casual.username,
+                userProfilePic: response.request.res.responseUrl,
+                userUserPhone: casual.phone,
+                userEmail: casual.email,
+                userPassword: casual.password,
+                userWebsite: casual.url,
+                userCompanyName: casual.company_name,
+                userAddress: {
+                    area: casual.country,
+                    city: casual.city,
+                    state: casual.state,
+                    country: casual.country,
+                    zipCode: casual.zip(5),
                     geolocation: {
-                        latitude: latitude,
-                        longitude: longitude,
+                        latitude: casual.latitude,
+                        longitude: casual.longitude,
                     },
                 },
-                createdAt: new Date(),
+                userAge: casual.integer(1, 100) || 1,
+                userGender: casual.random_element(['Male', 'Female']),
+                userCreatedAt: new Date(),
             };
 
             users.push(user);
@@ -110,7 +97,52 @@ const createFakeUsers = async (req, res) => {
     }
 }
 
+//* Route to get user by id
+const getUserById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const user = await User.findById(id);
+        res.json(user);
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Server error');
+    }
+}
+
+//* Route to update user by id
+const updateUser = (req, res) => {
+    // const { id } = req.params;
+
+    // User.findByIdAndUpdate(id, req.body, { new: true })
+    //     .then((user) => {
+    //         if (!user) {
+    //             return res.status(404).json({ message: 'User not found' });
+    //         }
+
+    //         res.status(200).json(user);
+    //     })
+    //     .catch((error) => res.status(500).json({ error: error.message }));
+};
+
+//* Route to delete user by id
+const deleteUser = (req, res) => {
+    // const { id } = req.params;
+
+    // User.findByIdAndRemove(id)
+    //     .then((user) => {
+    //         if (!user) {
+    //             return res.status(404).json({ message: 'User not found' });
+    //         }
+
+    //         res.status(200).json({ message: 'User deleted successfully' });
+    //     })
+    //     .catch((error) => res.status(500).json({ error: error.message }));
+};
+
 module.exports = {
     getAllUsers,
-    createFakeUsers
-}
+    getUserById,
+    createUser,
+    updateUser,
+    deleteUser,
+};

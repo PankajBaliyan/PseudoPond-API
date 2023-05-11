@@ -29,8 +29,8 @@ const employeesRoute = require('./routes/employees-routes'),
     photosRoute = require('./routes/photos-routes'),
     postsRoute = require('./routes/posts-routes'),
     commentsRoute = require('./routes/comments-routes'),
-    todosRoute = require('./routes/todos-routes')
-// usersRoute = require('./routes/users-routes'),
+    todosRoute = require('./routes/todos-routes'),
+    usersRoute = require('./routes/users-routes')
 // productsRoutes = require('./routes/products-routes'),
 // ordersRoutes = require('./routes/orders-routes'),
 
@@ -40,8 +40,8 @@ app.use(inventoryRoute)
 app.use(photosRoute)
 app.use(postsRoute)
 app.use(commentsRoute)
-// app.use(usersRoute)
 app.use(todosRoute)
+app.use(usersRoute)
 // app.use(productsRoutes)
 // app.use(ordersRoutes)
 
