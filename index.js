@@ -31,8 +31,8 @@ const employeesRoute = require('./routes/employees-routes'),
     commentsRoute = require('./routes/comments-routes'),
     todosRoute = require('./routes/todos-routes'),
     usersRoute = require('./routes/users-routes'),
-    productsRoutes = require('./routes/products-routes');
-// ordersRoutes = require('./routes/orders-routes'),
+    productsRoutes = require('./routes/products-routes'),
+    ordersRoutes = require('./routes/orders-routes')
 
 app.use(employeesRoute)
 app.use(eventsRoute)
@@ -43,7 +43,7 @@ app.use(commentsRoute)
 app.use(todosRoute)
 app.use(usersRoute)
 app.use(productsRoutes)
-// app.use(ordersRoutes)
+app.use(ordersRoutes)
 
 //! Server Setup
 app.listen(PORT, () => {
